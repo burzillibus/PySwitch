@@ -21,6 +21,7 @@ with patch.dict(sys.modules, {
         MAPPING_RX_ASSIGN_CONTROL_CHANGE,
         MAPPING_RX_MEMORY_CHANGE,
         MAPPING_STOMP_CONTROL_CHANGE,
+        MAPPING_TX_MEMORY_CHANGE,
     )
 
 
@@ -68,10 +69,14 @@ class TestBossGx100Mappings(unittest.TestCase):
         self.assertTrue(mapping.parse(ProgramChange(5)))
         self.assertEqual(mapping.value, 5)
 
+    def test_create_memory_send_mapping(self):
+        mapping = MAPPING_TX_MEMORY_CHANGE()
+        mapping.set_value(42)
+        self.assertEqual(mapping.set.patch, 42)
+
     def test_reject_invalid_navi_program_change_number(self):
         with self.assertRaises(ValueError):
             MAPPING_NAVI_MEMORY_CHANGE(-1)
 
         with self.assertRaises(ValueError):
             MAPPING_NAVI_MEMORY_CHANGE(128)
-

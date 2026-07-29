@@ -10,6 +10,7 @@ with patch.dict(sys.modules, {"micropython": MockMicropython}):
 
 class _Display:
     text = None
+    text_color = None
 
 
 class _Action:
@@ -60,3 +61,15 @@ class TestModeSelector(unittest.TestCase):
         action.push()
 
         self.assertEqual(selector.current_mode, "navi")
+
+    def test_select_mode_sets_the_configured_display_text_color(self):
+        display = _Display()
+        selector = ModeSelector("stomp", display, color = "red")
+
+        selector.init(_Application([]))
+        self.assertEqual(display.text, "STOMP")
+        self.assertEqual(display.text_color, "red")
+
+        selector.select("navi")
+        self.assertEqual(display.text, "NAVI")
+        self.assertEqual(display.text_color, "red")

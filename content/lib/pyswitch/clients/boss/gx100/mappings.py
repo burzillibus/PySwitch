@@ -18,6 +18,14 @@ def MAPPING_RX_MEMORY_CHANGE():
     )
 
 
+def MAPPING_TX_MEMORY_CHANGE():
+    """Select a GX-100 memory with a Program Change."""
+    return ClientParameterMapping.get(
+        name = "BOSS GX-100 memory select",
+        set = ProgramChange(0)
+    )
+
+
 def MAPPING_RX_ASSIGN_CONTROL_CHANGE(control):
     """Receive a Control Change configured in one of the GX-100 ASSIGN slots."""
     if control < 0 or control > 127:

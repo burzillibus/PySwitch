@@ -1,23 +1,26 @@
 ##############################################################################################################################################
-# BOSS GX-100: Stomp/Navi layout.
+# BOSS GX-100: MIDI Captain Mini6 Stomp/Navi layout.
 #
-# Stomp is the default. CC 64..73 are latched, colour-coded controls.
-# Navi is entered by holding physical Key 3 and left by holding physical Key 6
-# (the A switch). Navi LEDs mirror Program Changes received from the GX-100.
+# Stomp is the default. Key 1 enters Navi; in Navi, keys 2/3 select the
+# previous/next bank and keys 5/6 select the previous/next patch. Key 4
+# returns to Stomp. Navigation follows Program Changes received from the GX-100.
 ##############################################################################################################################################
 
-from pyswitch.clients.boss.gx100.actions import SHOW_RECEIVED_MEMORY
-from pyswitch.clients.boss.gx100.mappings import MAPPING_NAVI_MEMORY_CHANGE, MAPPING_STOMP_CONTROL_CHANGE
+from pyswitch.clients.boss.gx100.actions import (
+    NAVI_BANK_DOWN, NAVI_BANK_UP, NAVI_MODE_INDICATOR, NAVI_PATCH_DOWN,
+    NAVI_PATCH_UP, SHOW_RECEIVED_MEMORY,
+)
+from pyswitch.clients.boss.gx100.mappings import MAPPING_STOMP_CONTROL_CHANGE
 from pyswitch.clients.local.actions.binary_switch import BINARY_SWITCH
 from pyswitch.clients.local.actions.mode import ModeSelector, SELECT_MODE
 from pyswitch.colors import Colors
 from pyswitch.controller.actions import PushButtonAction
-from pyswitch.hardware.devices.pa_midicaptain_10 import *
+from pyswitch.hardware.devices.pa_midicaptain_mini_6 import *
 from display import DISPLAY_HEADER_1, DISPLAY_HEADER_2, DISPLAY_FOOTER_1, DISPLAY_FOOTER_2, DISPLAY_RIG_NAME
 
 _STOMP = "stomp"
 _NAVI = "navi"
-_MODE = ModeSelector(_STOMP, display = DISPLAY_RIG_NAME)
+_MODE = ModeSelector(_STOMP, display = DISPLAY_RIG_NAME, color = Colors.RED)
 
 
 def _stomp(control, text, color, display = None):
@@ -37,41 +40,49 @@ def _stomp(control, text, color, display = None):
     )
 
 
-def _memory(patch, display = None):
-    return BINARY_SWITCH(
-        mapping = MAPPING_NAVI_MEMORY_CHANGE(patch),
-        text = "PC " + str(patch + 1),
-        color = Colors.WHITE,
-        display = display,
-        mode = PushButtonAction.ONE_SHOT,
-        value_on = patch,
-        use_internal_state = False,
-        led_brightness_on = 0.25,
-        led_brightness_off = 0.0,
-        comparison_mode = 0,  # BinaryParameterCallback.EQUAL
-        reference_value = patch,
-        id = _NAVI,
-        enable_callback = _MODE,
-    )
-
-
 Inputs = [
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_1, "actions": [_stomp(64, "FX 1", Colors.RED, DISPLAY_HEADER_1), _memory(0, DISPLAY_HEADER_1)]},
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_2, "actions": [_stomp(65, "FX 2", Colors.GREEN, DISPLAY_HEADER_2), _memory(1, DISPLAY_HEADER_2)]},
     {
-        "assignment": PA_MIDICAPTAIN_10_SWITCH_3,
-        "actions": [_stomp(66, "FX 3", Colors.BLUE, DISPLAY_FOOTER_1), _memory(2, DISPLAY_FOOTER_1), SHOW_RECEIVED_MEMORY(display = DISPLAY_RIG_NAME)],
-        "actionsHold": [SELECT_MODE(_MODE, _NAVI)],
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_1,
+        "actions": [
+            SELECT_MODE(_MODE, _NAVI),
+            NAVI_MODE_INDICATOR(color = Colors.WHITE, id = _NAVI, enable_callback = _MODE),
+        ],
     },
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_4, "actions": [_stomp(67, "FX 4", Colors.ORANGE, DISPLAY_FOOTER_2), _memory(3, DISPLAY_FOOTER_2)]},
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_UP, "actions": [_stomp(68, "FX 5", Colors.CYAN), _memory(4)]},
     {
-        "assignment": PA_MIDICAPTAIN_10_SWITCH_A,
-        "actions": [_stomp(69, "FX 6", Colors.PURPLE), _memory(5)],
-        "actionsHold": [SELECT_MODE(_MODE, _STOMP)],
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_2,
+        "actions": [
+            _stomp(64, "FX 1", Colors.RED, DISPLAY_HEADER_1),
+            NAVI_BANK_DOWN(display = DISPLAY_HEADER_1, id = _NAVI, enable_callback = _MODE),
+        ],
     },
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_B, "actions": [_stomp(70, "FX 7", Colors.YELLOW), _memory(6)]},
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_C, "actions": [_stomp(71, "FX 8", Colors.PINK), _memory(7)]},
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_D, "actions": [_stomp(72, "FX 9", Colors.TURQUOISE), _memory(8)]},
-    {"assignment": PA_MIDICAPTAIN_10_SWITCH_DOWN, "actions": [_stomp(73, "FX 10", Colors.LIGHT_GREEN), _memory(9)]},
+    {
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_3,
+        "actions": [
+            _stomp(65, "FX 2", Colors.GREEN, DISPLAY_HEADER_2),
+            NAVI_BANK_UP(display = DISPLAY_HEADER_2, id = _NAVI, enable_callback = _MODE),
+            SHOW_RECEIVED_MEMORY(display = DISPLAY_RIG_NAME, color = Colors.RED),
+        ],
+    },
+    {
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_A,
+        "actions": [
+            _stomp(66, "FX 3", Colors.BLUE, DISPLAY_FOOTER_1),
+            SELECT_MODE(_MODE, _STOMP),
+            NAVI_MODE_INDICATOR(color = Colors.WHITE, id = _NAVI, enable_callback = _MODE),
+        ],
+    },
+    {
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_B,
+        "actions": [
+            _stomp(67, "FX 4", Colors.ORANGE, DISPLAY_FOOTER_2),
+            NAVI_PATCH_DOWN(display = DISPLAY_FOOTER_1, id = _NAVI, enable_callback = _MODE),
+        ],
+    },
+    {
+        "assignment": PA_MIDICAPTAIN_MINI_SWITCH_C,
+        "actions": [
+            _stomp(68, "FX 5", Colors.CYAN),
+            NAVI_PATCH_UP(display = DISPLAY_FOOTER_2, id = _NAVI, enable_callback = _MODE),
+        ],
+    },
 ]

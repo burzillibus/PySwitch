@@ -4,9 +4,10 @@ from ....controller.actions import Action
 
 
 class ModeSelector:
-    def __init__(self, initial_mode, display = None):
+    def __init__(self, initial_mode, display = None, color = None):
         self.current_mode = initial_mode
         self._display = display
+        self._color = color
         self._appl = None
 
     def enabled(self, action):
@@ -38,6 +39,8 @@ class ModeSelector:
     def _show_mode(self):
         if self._display:
             self._display.text = self.current_mode.upper()
+            if self._color is not None:
+                self._display.text_color = self._color
 
 
 def SELECT_MODE(selector, mode):
