@@ -35,7 +35,9 @@ DISPLAY_RIG_NAME = DisplayLabel(
         "maxTextWidth": 220,
         "text": "PySwitch",
     },
-    bounds = DisplayBounds(x = 0, y = 40, w = 240, h = 160),
+    # The central status text belongs in the second horizontal quarter
+    # (y = 60..120) of the 240x240 display.
+    bounds = DisplayBounds(x = 0, y = 60, w = 240, h = 60),
     id = 5
 )
 

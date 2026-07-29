@@ -93,18 +93,21 @@ class TestGx100InputsProfile(unittest.TestCase):
     def setUp(self):
         self.profile, self.keys = _load_profile()
 
-    def test_stomp_is_default_and_the_five_stomp_controls_are_coloured_latches(self):
+    def test_stomp_is_default_and_the_four_stomp_controls_are_coloured_latches(self):
         self.assertEqual(self.profile._MODE.current_mode, "stomp")
         self.assertEqual(len(self.profile.Inputs), 6)
 
-        expected_colours = [
-            _Colors.RED, _Colors.GREEN, _Colors.BLUE, _Colors.ORANGE, _Colors.CYAN,
+        expected_stomps = [
+            (self.profile.Inputs[1], 64, _Colors.RED),
+            (self.profile.Inputs[2], 65, _Colors.GREEN),
+            (self.profile.Inputs[4], 67, _Colors.ORANGE),
+            (self.profile.Inputs[5], 68, _Colors.CYAN),
         ]
-        for index, input_definition in enumerate(self.profile.Inputs[1:]):
+        for input_definition, control, color in expected_stomps:
             stomp = input_definition["actions"][0]
-            self.assertEqual(stomp["mapping"], ("stomp", 64 + index))
+            self.assertEqual(stomp["mapping"], ("stomp", control))
             self.assertEqual(stomp["mode"], "latch")
-            self.assertEqual(stomp["color"], expected_colours[index])
+            self.assertEqual(stomp["color"], color)
             self.assertEqual(stomp["led_brightness_on"], 0.30)
             self.assertEqual(stomp["led_brightness_off"], 0.0)
             self.assertEqual(stomp["id"], "stomp")
@@ -116,6 +119,8 @@ class TestGx100InputsProfile(unittest.TestCase):
         self.assertEqual(key_1["assignment"], self.keys[0])
         self.assertEqual(key_1["actions"][0]["target"], "navi")
         self.assertEqual(key_4["assignment"], self.keys[5])
+        self.assertEqual(key_4["actions"][0]["mode_indicator"]["color"], _Colors.WHITE)
+        self.assertEqual(key_4["actions"][0]["mode_indicator"]["id"], "stomp")
         self.assertEqual(key_4["actions"][1]["target"], "stomp")
 
         key_6 = self.profile.Inputs[5]

@@ -85,6 +85,12 @@ def _make_splash(module):
 
 
 class TestOptionalWallpaper(unittest.TestCase):
+    def test_central_status_text_uses_the_second_horizontal_quarter(self):
+        module = _load_display(False)
+        bounds = module.DISPLAY_RIG_NAME.bounds
+
+        self.assertEqual((bounds.x, bounds.y, bounds.w, bounds.h), (0, 60, 240, 60))
+
     def test_disabled_does_not_allocate_bitmap_objects(self):
         module = _load_display(False)
         _make_splash(module)

@@ -66,7 +66,7 @@ Inputs = [
     {
         "assignment": PA_MIDICAPTAIN_MINI_SWITCH_A,
         "actions": [
-            _stomp(66, "FX 3", Colors.BLUE, DISPLAY_FOOTER_1),
+            NAVI_MODE_INDICATOR(color = Colors.WHITE, id = _STOMP, enable_callback = _MODE),
             SELECT_MODE(_MODE, _STOMP),
             NAVI_MODE_INDICATOR(color = Colors.WHITE, id = _NAVI, enable_callback = _MODE),
         ],
