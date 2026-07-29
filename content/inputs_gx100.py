@@ -8,7 +8,7 @@
 
 from pyswitch.clients.boss.gx100.actions import (
     NAVI_BANK_DOWN, NAVI_BANK_UP, NAVI_MODE_INDICATOR, NAVI_PATCH_DOWN,
-    NAVI_PATCH_UP, SHOW_RECEIVED_MEMORY,
+    NAVI_PATCH_UP, SHOW_RECEIVED_MEMORY, SYNC_GX100_MEMORY,
 )
 from pyswitch.clients.boss.gx100.mappings import MAPPING_STOMP_CONTROL_CHANGE
 from pyswitch.clients.local.actions.binary_switch import BINARY_SWITCH
@@ -45,6 +45,7 @@ Inputs = [
         "assignment": PA_MIDICAPTAIN_MINI_SWITCH_1,
         "actions": [
             SELECT_MODE(_MODE, _NAVI),
+            SYNC_GX100_MEMORY(display = DISPLAY_RIG_NAME, color = Colors.RED),
             NAVI_MODE_INDICATOR(color = Colors.WHITE, id = _NAVI, enable_callback = _MODE),
         ],
     },

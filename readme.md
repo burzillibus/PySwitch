@@ -32,8 +32,10 @@ stato dell'effetto.
 ## Modalita' NAVI
 
 Premere 1 per entrare in NAVI. Il testo `NAVI` e' rosso. La navigazione parte
-dall'ultimo Program Change ricevuto dalla GX-100 e invia il Program Change
-della memoria richiesta.
+dalla memoria attuale della GX-100: all'ingresso, la Mini6 la legge
+automaticamente con una richiesta SysEx RQ1 e invia il Program Change della
+memoria richiesta. Il profilo usa `MAP SELECT = FIX`: PC#1–PC#100 corrispondono
+in ordine alle memorie U01-1–U25-4.
 
 | Pulsante | Funzione | LED |
 | --- | --- | --- |
@@ -41,13 +43,11 @@ della memoria richiesta.
 | 2 | Banco precedente, stessa posizione patch. | Rosso |
 | 3 | Banco successivo, stessa posizione patch. | Verde |
 | 4 | Torna in STOMP. | Bianco |
-| 5 | Patch precedente, con ciclo interno al banco. | Rosso |
-| 6 | Patch successiva, con ciclo interno al banco. | Verde |
+| 5 | Patch precedente; dalla prima passa all'ultima del banco precedente. | Rosso |
+| 6 | Patch successiva; dall'ultima passa alla prima del banco successivo. | Verde |
 
-Un banco contiene quattro patch. Ai limiti MIDI, Program Change 1 e 128, il
-cambio banco resta sul limite. Prima di navigare la Mini6 deve ricevere almeno
-un Program Change dalla GX-100: selezionare quindi una patch direttamente
-sulla GX-100 dopo l'accensione.
+Un banco contiene quattro patch. Ai limiti del profilo, Program Change 1 e 100,
+il cambio banco resta sul limite.
 
 ## File e verifica
 

@@ -38,6 +38,7 @@ def _load_profile():
     actions.NAVI_BANK_UP = lambda **kwargs: {"bank_up": kwargs}
     actions.NAVI_PATCH_DOWN = lambda **kwargs: {"patch_down": kwargs}
     actions.NAVI_PATCH_UP = lambda **kwargs: {"patch_up": kwargs}
+    actions.SYNC_GX100_MEMORY = lambda **kwargs: {"sync_memory": kwargs}
 
     binary = ModuleType("pyswitch.clients.local.actions.binary_switch")
     binary.BINARY_SWITCH = lambda **kwargs: kwargs
@@ -121,6 +122,7 @@ class TestGx100InputsProfile(unittest.TestCase):
 
         self.assertEqual(key_1["assignment"], self.keys[0])
         self.assertEqual(key_1["actions"][0]["target"], "navi")
+        self.assertEqual(key_1["actions"][1]["sync_memory"]["display"], "DISPLAY_RIG_NAME")
         self.assertEqual(key_4["assignment"], self.keys[5])
         self.assertEqual(key_4["actions"][0]["mode_indicator"]["color"], _Colors.WHITE)
         self.assertEqual(key_4["actions"][0]["mode_indicator"]["id"], "stomp")
@@ -136,8 +138,8 @@ class TestGx100InputsProfile(unittest.TestCase):
     def test_navi_controls_use_the_requested_navigation_and_led_colours(self):
         actions = [input_definition["actions"] for input_definition in self.profile.Inputs]
 
-        self.assertEqual(actions[0][1]["mode_indicator"]["id"], "navi")
-        self.assertEqual(actions[0][1]["mode_indicator"]["color"], _Colors.WHITE)
+        self.assertEqual(actions[0][2]["mode_indicator"]["id"], "navi")
+        self.assertEqual(actions[0][2]["mode_indicator"]["color"], _Colors.WHITE)
         self.assertEqual(actions[1][1]["bank_down"]["id"], "navi")
         self.assertEqual(actions[2][1]["bank_up"]["id"], "navi")
         self.assertEqual(actions[3][2]["mode_indicator"]["color"], _Colors.WHITE)

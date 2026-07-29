@@ -14,11 +14,13 @@ with patch.dict(sys.modules, {
 }):
     from adafruit_midi.control_change import ControlChange
     from adafruit_midi.program_change import ProgramChange
+    from adafruit_midi.system_exclusive import SystemExclusive
     from lib.pyswitch.controller.client import ClientParameterMapping
-    from lib.pyswitch.clients.boss.gx100.actions import SHOW_RECEIVED_MEMORY
+    from lib.pyswitch.clients.boss.gx100.actions import NAVI_PATCH_DOWN, NAVI_PATCH_UP, SHOW_RECEIVED_MEMORY, SYNC_GX100_MEMORY
     from lib.pyswitch.clients.boss.gx100.mappings import (
         MAPPING_NAVI_MEMORY_CHANGE,
         MAPPING_RX_ASSIGN_CONTROL_CHANGE,
+        MAPPING_RX_CURRENT_MEMORY,
         MAPPING_RX_MEMORY_CHANGE,
         MAPPING_STOMP_CONTROL_CHANGE,
         MAPPING_TX_MEMORY_CHANGE,
@@ -73,6 +75,60 @@ class TestBossGx100Mappings(unittest.TestCase):
         mapping = MAPPING_TX_MEMORY_CHANGE()
         mapping.set_value(42)
         self.assertEqual(mapping.set.patch, 42)
+
+    def test_read_current_memory_with_gx100_rq1(self):
+        mapping = MAPPING_RX_CURRENT_MEMORY()
+        self.assertEqual(mapping.request.manufacturer_id, [0x41])
+        self.assertEqual(mapping.request.data[-5:], [0x00, 0x00, 0x00, 0x04, 0x7C])
+
+        response = SystemExclusive(
+            manufacturer_id = [0x41],
+            data = [0x10, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x12,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x0B, 0x00]
+        )
+        self.assertTrue(mapping.parse(response))
+        self.assertEqual(mapping.value, 43)
+
+    def test_sync_action_requests_the_current_memory(self):
+        client = type("Client", (), {"requests": [], "request": lambda self, mapping, listener: self.requests.append((mapping, listener))})()
+        application = type("Application", (), {"client": client})()
+        callback = SYNC_GX100_MEMORY().callback
+        callback._appl = application
+
+        callback.push()
+        self.assertEqual(len(client.requests), 1)
+        self.assertIs(callback._mapping, client.requests[0][0])
+
+    def test_patch_navigation_crosses_bank_boundaries(self):
+        application = type("Application", (), {"client": type("Client", (), {
+            "set_calls": [],
+            "set": lambda self, mapping, value: self.set_calls.append((mapping, value)),
+        })()})()
+
+        patch_up = NAVI_PATCH_UP().callback
+        patch_up._appl = application
+        patch_up._memory.value = 3
+        patch_up.push()
+
+        patch_down = NAVI_PATCH_DOWN().callback
+        patch_down._appl = application
+        patch_down._memory.value = 4
+        patch_down.push()
+
+        self.assertEqual(application.client.set_calls[0][1], 4)
+        self.assertEqual(application.client.set_calls[1][1], 3)
+
+    def test_navigation_clamps_to_pc_1_through_pc_100(self):
+        application = type("Application", (), {"client": type("Client", (), {
+            "set_calls": [],
+            "set": lambda self, mapping, value: self.set_calls.append((mapping, value)),
+        })()})()
+        callback = NAVI_PATCH_UP().callback
+        callback._appl = application
+        callback._memory.value = 99
+
+        callback.push()
+        self.assertEqual(application.client.set_calls[0][1], 99)
 
     def test_reject_invalid_navi_program_change_number(self):
         with self.assertRaises(ValueError):
