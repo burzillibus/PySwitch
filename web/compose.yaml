@@ -1,0 +1,15 @@
+services:
+  pyswitch-ui:
+    build: .
+    container_name: apache-pyswitch-ui
+    ports:
+      - "80:80"
+    volumes:
+      - ./htdocs:/var/www/html
+      - ../content:/var/www/html/circuitpy
+      - ../examples:/var/www/html/examples
+      
+      - ./apache2-conf:/etc/apache2/sites-available
+      - ./apache2-log:/var/log/apache2
+      
+  

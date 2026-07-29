@@ -1,0 +1,77 @@
+.container .messages {
+	position: absolute;
+	bottom: 0.3em;
+ 	left: 50%;
+  	transform: translateX(-50%);
+  	border-radius: 0.3em;	
+
+	z-index: 500;
+}
+
+.container .messages tbody {
+	padding: 0.4em;
+}
+
+.container .messages td {
+	text-align: center;	
+	padding: 0.18em 0.4em;
+}
+	
+.container .messages td > div {
+	max-width: 90vw;
+	width: fit-content;
+	white-space: pre-wrap;
+}
+
+/***************************************************************/
+
+.container .message {
+	display: inline-block;
+    padding: 0.4em 0.8em;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0.3em;
+}
+
+.container .message-traceback {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+	text-align: left;
+}
+
+.container .message-danger {
+    background-color: #d9534f;
+	border-color: #d43f3a;
+	color: white;
+}
+
+.container .message-warning {
+    background-color: #f0ad4e;
+	border-color: #eea236;
+	color: white;
+}
+
+.container .message-success {
+    background-color: #5cb85c;
+	border-color: #4cae4c;
+	color: white;
+}
+
+.container .message-info {
+    background-color: #5bc0de;
+	border-color: #46b8da;
+	color: white;
+}

@@ -1,0 +1,6 @@
+**/.DS_Store
+
+htdocs/*
+!htdocs/versions
+
+apache2-log

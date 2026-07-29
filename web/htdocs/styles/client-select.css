@@ -1,0 +1,94 @@
+
+:root {
+    --color-client-select-connected: rgb(0, 128, 0);
+    --color-client-select-connected-alpha: rgba(0, 128, 0, 0.1);
+
+    --color-client-select-waiting: rgb(250, 150, 0);
+    --color-client-select-waiting-alpha: rgba(250, 150, 0, 0.1);
+
+    --color-client-select-not-connected: rgb(120, 120, 120);
+    --color-client-select-not-connected-alpha: rgba(120, 120, 120, 0.1);
+}
+
+.container .application .client-select {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+
+    width: 20vw;
+    max-width: 6em;
+    height: 20vw;
+    max-height: 6em;
+    
+    border-radius: 50%;
+
+    cursor: pointer;
+    opacity: 0.3;
+
+    transition: opacity 0.2s;
+    container-type: size;
+}
+
+@keyframes pyswitch-pulse {
+    0% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+}
+
+.container .application .client-select.connected {
+    border: 0.3vw solid var(--color-client-select-connected);
+}
+
+.container .application .client-select.waiting {
+    border: 0.3vw solid var(--color-client-select-waiting);
+    animation: pyswitch-pulse 0.5s infinite;
+}
+
+.container .application .client-select.not-connected {
+    border: 0.3vw solid var(--color-client-select-not-connected);
+}
+
+
+.container .application .client-select.connected:hover {
+    background-color: var(--color-client-select-connected-alpha);
+    opacity: 1;
+}
+
+.container .application .client-select.connected:hover {
+    background-color: var(--color-client-select-waiting-alpha);
+    opacity: 1;
+}
+
+.container .application .client-select.not-connected:hover {
+    background-color: var(--color-client-select-not-connected-alpha);
+    opacity: 1;
+}
+
+.container .application .client-select > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 40cqw;
+}
+
+.container .application .client-select.connected > * {
+    color: var(--color-client-select-connected);
+}
+
+.container .application .client-select.waiting > * {
+    color: var(--color-client-select-waiting);
+}
+
+.container .application .client-select.not-connected > * {
+    color: var(--color-client-select-not-connected);
+}

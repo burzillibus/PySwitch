@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PySwitch Emulator</title>
+    
+    <link rel="manifest" href="manifest.json" type="application/json" crossorigin="use-credentials">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <link rel="apple-mobile-web-app-title" href="PySwitch" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">    
+
+    <!-- Lib CSS -->
+    <link rel="stylesheet" href="lib/fa/css/all.min.css">    
+    <link rel="stylesheet" href="lib/jquery/jquery-ui/jquery-ui.min.css">    
+
+    <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="lib/codemirror/addons/lint/lint.css">
+
+    <link rel="stylesheet" href="lib/tippy/themes/translucent.css">
+
+    <!-- Lib JS -->
+    <script type="text/javascript" src="lib/jquery/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery-ui/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="lib/sammy-latest.min.js"></script>    
+
+    <script type="text/javascript" src="lib/pyodide/pyodide.js"></script>
+
+    <script type="text/javascript" src="lib/jsmidibridge/JsMidiBridge.js"></script>
+
+    <script type="text/javascript" src="lib/muuri/muuri.min.js"></script>
+
+    <script type="text/javascript" src="lib/marked/marked.min.js"></script>
+
+    <script type="text/javascript" src="lib/interactjs/interact.min.js"></script>
+
+    <script type="text/javascript" src="lib/tippy/popper.min.js"></script>
+    <script type="text/javascript" src="lib/tippy/tippy-bundle.umd.min.js"></script>
+
+    <script src="lib/codemirror/lib/codemirror.js"></script>  
+    <script src="lib/codemirror/mode/python/python.js"></script>  
+    <script src="lib/codemirror/addons/lint/lint.js"></script>  
+
+    <script type="text/javascript" src="lib/FileSaver/FileSaver.min.js"></script>
+    <script type="module">
+        import { downloadZip } from "./lib/client-zip.js"; 
+        window.downloadZip = downloadZip;
+    </script>
+
+    <script type="module">
+        import { get, set } from "./lib/idb-keyval/idb-keyval.js"; 
+        window.idbKeyval = {
+            get: get,
+            set: set
+        }
+    </script>
+
+    <!-- Application CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/general.css">
+    <link rel="stylesheet" type="text/css" href="styles/tabs.css">
+    <link rel="stylesheet" type="text/css" href="styles/buttons.css">
+    <link rel="stylesheet" type="text/css" href="styles/application.css">
+    <link rel="stylesheet" type="text/css" href="styles/progress.css">
+    <link rel="stylesheet" type="text/css" href="styles/message.css">
+    <link rel="stylesheet" type="text/css" href="styles/list-browser.css">
+    <link rel="stylesheet" type="text/css" href="styles/client-select.css">
+    <link rel="stylesheet" type="text/css" href="styles/pyswitch.css">
+    <link rel="stylesheet" type="text/css" href="styles/virtual-clients.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-frontend.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-action-properties.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-actions.css">
+    <link rel="stylesheet" type="text/css" href="styles/markdown.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-additional-params.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-frontend-action-icons.css">
+    <link rel="stylesheet" type="text/css" href="styles/parser-pages.css">
+    <link rel="stylesheet" type="text/css" href="styles/tooltips.css">
+    <link rel="stylesheet" type="text/css" href="styles/parameter-list.css">
+    <link rel="stylesheet" type="text/css" href="styles/display-editor.css">
+    <link rel="stylesheet" type="text/css" href="styles/code-editor.css">
+    <link rel="stylesheet" type="text/css" href="styles/midi-monitor.css">
+    <link rel="stylesheet" type="text/css" href="styles/emulator-settings.css">
+    
+    <!-- Main classes -->
+    <script type="text/javascript" src="js/Controller.js"></script>
+    <script type="text/javascript" src="js/PySwitchRunner.js"></script>
+    <script type="text/javascript" src="js/ClientController.js"></script>
+    <script type="text/javascript" src="js/DeviceController.js"></script>
+    <script type="text/javascript" src="js/PySwitchVersionCheck.js"></script>
+    
+    <script type="text/javascript" src="js/misc/Tools.js"></script>
+    <script type="text/javascript" src="js/misc/PeriodCounter.js"></script>
+    <script type="text/javascript" src="js/misc/LocalState.js"></script>
+    
+    <!-- Routing -->
+    <script type="text/javascript" src="js/routing/Routing.js"></script>
+    <script type="text/javascript" src="js/routing/CallbackQueue.js"></script>
+    
+    <!-- Data model -->
+    <script type="text/javascript" src="js/model/Device.js"></script>
+    <script type="text/javascript" src="js/model/Client.js"></script>
+    <script type="text/javascript" src="js/model/VirtualClient.js"></script>
+    <script type="text/javascript" src="js/model/ClientDetector.js"></script>
+    <script type="text/javascript" src="js/model/Presets.js"></script>
+    <script type="text/javascript" src="js/model/ConfigFile.js"></script>
+    <script type="text/javascript" src="js/model/CommunicationSettings.js"></script>
+    
+    <script type="text/javascript" src="js/model/configurations/Configuration.js"></script>
+    <script type="text/javascript" src="js/model/configurations/ControllerConfiguration.js"></script>
+    <script type="text/javascript" src="js/model/configurations/WebConfiguration.js"></script>
+    <script type="text/javascript" src="js/model/configurations/PresetConfiguration.js"></script>
+    <script type="text/javascript" src="js/model/configurations/LocalFolderConfiguration.js"></script>
+
+    <!-- Parser -->
+    <script type="text/javascript" src="js/model/parser/Parser.js"></script>
+    <script type="text/javascript" src="js/model/parser/FunctionMeta.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParameterMeta.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParameterRange.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParserChecks.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParserTreeElement.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParserInput.js"></script>
+    <script type="text/javascript" src="js/model/parser/ParserInputAction.js"></script>
+    <script type="text/javascript" src="js/model/parser/ClassItemExtractor.js"></script>
+    <script type="text/javascript" src="js/model/parser/Resolver.js"></script>
+    <script type="text/javascript" src="js/model/parser/MappingOptions.js"></script>
+
+    <!-- MIDI related classes -->
+    <script type="text/javascript" src="js/midi/MidiHandler.js"></script>
+    <script type="text/javascript" src="js/midi/MidiListener.js"></script>
+    <script type="text/javascript" src="js/midi/MidiBridgeHandler.js"></script>
+    <script type="text/javascript" src="js/midi/PythonMidiWrapper.js"></script>        
+
+    <!-- User Interface -->
+    <script type="text/javascript" src="js/ui/PySwitchUI.js"></script>
+    <script type="text/javascript" src="js/ui/PySwitchFrontend.js"></script>
+
+    <!-- Popups -->
+    <script type="text/javascript" src="js/ui/popups/Popup.js"></script>
+    <script type="text/javascript" src="js/ui/popups/BrowserPopup.js"></script>
+    <script type="text/javascript" src="js/ui/popups/BrowserEntry.js"></script>
+    <script type="text/javascript" src="js/ui/popups/BrowserProvider.js"></script>
+
+    <!-- Tabs -->
+    <script type="text/javascript" src="js/ui/tabs/Tabs.js"></script>
+    <script type="text/javascript" src="js/ui/tabs/Tab.js"></script>
+
+    <!-- Misc. UI stuff -->
+    <script type="text/javascript" src="js/ui/misc/ParameterList.js"></script>
+    <script type="text/javascript" src="js/ui/misc/Notifications.js"></script>
+    <script type="text/javascript" src="js/ui/misc/ClientConnectionButton.js"></script>
+    <script type="text/javascript" src="js/ui/misc/PortsProvider.js"></script>
+    <script type="text/javascript" src="js/ui/misc/SingleEntryProvider.js"></script>
+    <script type="text/javascript" src="js/ui/misc/Download.js"></script>
+    <script type="text/javascript" src="js/ui/misc/Upload.js"></script>
+    <script type="text/javascript" src="js/ui/misc/WcRotationInput.js"></script>
+    <script type="text/javascript" src="js/ui/misc/MidiMonitor.js"></script>
+    <script type="text/javascript" src="js/ui/misc/EmulatorSettings.js"></script>
+
+    <!-- Parser frontend -->
+    <script type="text/javascript" src="js/ui/parser/ParserFrontend.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ParserFrontendInput.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ParserFrontendIcons.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ActionProperties.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ActionsProvider.js"></script>
+    <script type="text/javascript" src="js/ui/parser/InputSettings.js"></script>
+    <script type="text/javascript" src="js/ui/parser/PagesList.js"></script>
+    <script type="text/javascript" src="js/ui/parser/PagerProperties.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ActionPropertiesInternal.js"></script>
+    <script type="text/javascript" src="js/ui/parser/ActionPropertiesEncoder.js"></script>
+
+    <!-- Presets -->
+    <script type="text/javascript" src="js/ui/presets/LocalPresetsProvider.js"></script>
+
+    <!-- Editors -->
+    <script type="text/javascript" src="js/ui/editors/CodeEditor.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayEditor.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayPreview.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayParameters.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayParameterList.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayNode.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayNodeType.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayNodePreviewDrag.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayNodePreview.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayCallbackParameterList.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/DisplayGeneralParameterList.js"></script>
+
+    <script type="text/javascript" src="js/ui/editors/display/types/DisplayLabelType.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/DisplayLabelTypeLayout.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/DisplayLabelTypeParameterList.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/BidirectionalProtocolStateType.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/BidirectionalStateTypeParameterList.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/TunerDisplayType.js"></script>
+    <script type="text/javascript" src="js/ui/editors/display/types/TunerDisplayTypeParameterList.js"></script>
+
+    <!-- Data providers for loading -->
+    <script type="text/javascript" src="js/ui/examples/ExamplesProvider.js"></script>
+    <script type="text/javascript" src="js/ui/examples/TemplatesProvider.js"></script>
+
+    <!-- Local Folder access -->
+    <script type="text/javascript" src="js/ui/localfolder/LocalFolderSelection.js"></script>
+
+    <!-- Clients (general) -->
+    <script type="text/javascript" src="clients/ClientFactory.js"></script>
+
+    <!-- Clients: Kemper -->
+    <script type="text/javascript" src="clients/kemper/KemperClient.js"></script>
+    <script type="text/javascript" src="clients/kemper/KemperClientDetector.js"></script>
+    <script type="text/javascript" src="clients/kemper/KemperFunctionMeta.js"></script>
+    <script type="text/javascript" src="clients/kemper/KemperParameterMeta.js"></script>
+    
+    <!-- Virtual Kemper client -->
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperParameter.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperParameterDefault.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperParameters.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperClient.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperProtocol.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperClientSetup.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperParameterKeys.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperTempo.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperTuner.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperMorph.js"></script>
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperStats.js"></script>
+    
+    <script type="text/javascript" src="clients/kemper/virtual/VirtualKemperClientUI.js"></script>
+
+    <!-- Boomerang -->
+    <script type="text/javascript" src="clients/boomerang/BoomerangClient.js"></script>
+    <script type="text/javascript" src="clients/boomerang/BoomerangFunctionMeta.js"></script>
+
+    <!-- Devices: Paintaudio -->
+    <script type="text/javascript" src="devices/paintaudio/PaintAudioDevice.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="devices/paintaudio/styles/midicaptain-nano-4.css">
+    <link rel="stylesheet" type="text/css" href="devices/paintaudio/styles/midicaptain-mini-6.css">
+    <link rel="stylesheet" type="text/css" href="devices/paintaudio/styles/midicaptain-10.css">
+    <link rel="stylesheet" type="text/css" href="devices/paintaudio/styles/midicaptain.css">    <!-- Must be last for media queries to work! -->
+   
+    <style>
+        .pyswitch-emulator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            new Controller({
+                containerElementSelector: '.pyswitch-emulator',
+                // exploreMode: true
+            }).run();
+        }
+    </script>
+</head>
+<body>
+    <div class="pyswitch-emulator" />
+</body>
+</html>

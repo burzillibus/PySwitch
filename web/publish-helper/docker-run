@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker compose up -d
+
+docker exec -it apache-pyswitch-publish-helper bash
+
+docker compose down

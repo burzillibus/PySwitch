@@ -1,0 +1,87 @@
+
+.midicaptain-mini-6 {    
+    max-width: 700px;
+}
+
+.midicaptain-mini-6 #pyswitch-background {
+    content: url("midicaptain-mini-6.png");
+}
+
+/****************************************************************/
+
+.midicaptain-mini-6 #pyswitch-display {
+    top: 49.3%;
+    left: 30.5%;
+    width: 16%;
+    transition: all 0.2s;
+}
+
+.midicaptain-mini-6 #pyswitch-display:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+/****************************************************************/
+
+.midicaptain-mini-6 .pyswitch-switch {
+    width: 13.3%;
+    height: 0;
+    padding-bottom: 13.3%;
+}
+
+/****************************************************************/
+
+.midicaptain-mini-6 #pyswitch-switch-gp1 {
+    top: 9.7%;
+    left: 4.4%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp25 {
+    top: 9.7%;
+    left: 43.3%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp24 {
+    top: 9.7%;
+    right: 4.95%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp9 {
+    bottom: 11.6%;
+    left: 4.45%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp10 {
+    bottom: 11.4%;
+    left: 43.2%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp11 {
+    bottom: 11.7%;
+    right: 4.9%;
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp9 .pyswitch-switch-visual,
+.midicaptain-mini-6 #pyswitch-switch-gp10 .pyswitch-switch-visual,
+.midicaptain-mini-6 #pyswitch-switch-gp11 .pyswitch-switch-visual {
+    transform: rotate(-60deg); 
+}
+
+/****************************************************************/
+
+
+.midicaptain-mini-6 #pyswitch-switch-gp1 .pyswitch-parser-frontend,
+.midicaptain-mini-6 #pyswitch-switch-gp25 .pyswitch-parser-frontend,
+.midicaptain-mini-6 #pyswitch-switch-gp24 .pyswitch-parser-frontend {
+    top: -40%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+.midicaptain-mini-6 #pyswitch-switch-gp9 .pyswitch-parser-frontend,
+.midicaptain-mini-6 #pyswitch-switch-gp10 .pyswitch-parser-frontend,
+.midicaptain-mini-6 #pyswitch-switch-gp11 .pyswitch-parser-frontend {
+    bottom: -50%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+}
+

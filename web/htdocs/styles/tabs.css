@@ -1,0 +1,123 @@
+.container .tabs {
+    position: relative;
+    width: 42cqw;  /* initial width, before resizing */
+
+    background-color: rgb(110, 110, 110);
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: min-content auto;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    min-width: 10em;
+    max-width: 80cqw;
+
+    container-type: size;
+}
+
+@media all and (width <= 900px) {
+    .container .tabs {
+        resize: none;
+        width: unset !important;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 30;
+
+        resize: none;
+    }
+}
+
+/******************************************************************/
+
+.container .tabs .header {
+    position: relative;
+    background-color: rgb(110, 110, 110);
+    width: 100cqw;
+}
+
+.container .tabs .content {
+    background-color: #afafaf;
+    container-type: size;
+    overflow: auto;
+}
+
+/******************************************************************/
+
+.container .tabs .header-tabs-container {
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.container .tabs .header-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start; /* left */
+    align-items: stretch;
+}
+
+.container .tabs .header-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+}
+
+.container .tabs .header-buttons > * {
+    background-color: rgb(110, 110, 110);
+    height: 100%;
+    display: inline-block;
+}
+
+.container .tabs .header-buttons > *:last-child {
+    padding-right: 1em;
+}
+
+.container .tabs .header-buttons > * > * {
+    height: 100%;    
+    color: rgb(199, 199, 199);
+    cursor: pointer;
+    padding: 0.8em 0 0.1em 1em;
+    cursor: pointer;
+}
+
+.container .tabs .header-buttons > * > *:hover {
+    color: white;
+}
+
+.container .tabs .header-buttons > * > .inactive {
+    color: rgb(146, 146, 146);
+}
+
+.container .tabs .header-buttons > * > .inactive:hover {
+    color: rgb(146, 146, 146);
+}
+
+/******************************************************************/
+
+.container .tabs .header .header-item {
+    background-color: #787878;
+    color: rgb(199, 199, 199);
+    padding: 0.5em 1em 0.5em 1em;
+    cursor: pointer;
+    margin-top: 0.3em;
+    margin-left: 0.3em;
+    border-radius: 0.5em 0.5em 0 0;
+    white-space: pre;
+}
+
+.container .tabs .header .header-item:hover {
+    background-color: #878787;
+}
+
+.container .tabs .header .header-item.active {
+    background-color: #afafaf;
+    color: black;
+}
+

@@ -1,0 +1,1254 @@
+[
+    {
+        "client": "kemper",
+        "entities": [
+            {
+                "entityName": "default",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "advanced": 1,
+                        "type": "any",
+                        "comment": "This ID can be used for Paging or custom callbacks, to enable/disable the action."
+                    },
+                    {
+                        "name": "use_leds",
+                        "type": "bool",
+                        "comment": "If disabled, the action will not use the LEDs of the switch"
+                    },
+                    {
+                        "name": "display",
+                        "type": "select",
+                        "comment": "Display label to visualize the action state (must be defined in display.py)"
+                    },
+                    {
+                        "name": "display_mode",
+                        "comment": "Decides how the colors and texts are determined.",
+                        "type": "select",
+                        "values": [
+                            {
+                                "name": "Target Rig",
+                                "value": "RIG_SELECT_DISPLAY_TARGET_RIG"
+                            },
+                            {
+                                "name": "Current Rig",
+                                "value": "RIG_SELECT_DISPLAY_CURRENT_RIG"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "use_internal_state",
+                        "type": "bool",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "rig",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_RIGS_PER_BANK",
+                            "additionalValues": [
+                                {
+                                    "name": "None",
+                                    "value": "None"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "rig_off",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_RIGS_PER_BANK",
+                            "additionalValues": [
+                                {
+                                    "name": "None",
+                                    "value": "None"
+                                },
+                                {
+                                    "name": "'auto'",
+                                    "value": "'auto'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "bank",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_BANKS"
+                        }
+                    },
+                    {
+                        "name": "bank_off",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_BANKS",
+                            "additionalValues": [
+                                {
+                                    "name": "None",
+                                    "value": "None"
+                                },
+                                {
+                                    "name": "'auto'",
+                                    "value": "'auto'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "color",
+                        "type": "color",
+                        "advanced": 1
+                    },
+
+                    {
+                        "name": "value_on",
+                        "type": "any",
+                        "advanced": 1
+                    },
+
+                    {
+                        "name": "value_off",
+                        "type": "any",
+                        "advanced": 1
+                    },
+
+                    {
+                        "name": "reference_value",
+                        "type": "any",
+                        "advanced": 2
+                    },
+
+                    {
+                        "name": "enable_callback",
+                        "advanced": 2,
+                        "type": "any",
+                        "comment": "Callback instance to control dynamically whether the action should be enabled."
+                    },
+
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "advanced": 1,
+                        "unconvertedValues": [
+                            "None"
+                        ],
+                        "comment": "Fixed text (overrides the action specific text if the action would generate one)"
+                    },
+                    {
+                        "name": "text_callback",
+                        "advanced": 2,
+                        "type": "any",
+                        "comment": "Callback function for the display text. See the action source code for details."
+                    },
+
+                    {
+                        "name": "color_callback",
+                        "advanced": 2,
+                        "type": "any",
+                        "comment": "Callback function for the color. See the action source code for details."
+                    },
+
+                    {
+                        "name": "dim_factor",
+                        "advanced": 1,
+                        "type": "any",
+                        "comment": "Dim factor for the display. Range: [0..1]"
+                    },
+
+                    {
+                        "name": "led_brightness",
+                        "advanced": 1,
+                        "type": "any",
+                        "comment": "Brightness factor for the LED(s). Range: [0..1]"
+                    },
+
+                    {
+                        "name": "slot_id",
+                        "type": "select",
+                        "values": [
+                            {
+                                "name": "Slot A",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_A"
+                            },
+                            {
+                                "name": "Slot B",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_B"
+                            },
+                            {
+                                "name": "Slot C",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_C"
+                            },
+                            {
+                                "name": "Slot D",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_D"
+                            },
+
+                            {
+                                "name": "Slot X",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_X"
+                            },
+                            {
+                                "name": "Slot MOD",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_MOD"
+                            },
+                            {
+                                "name": "Slot DLY (with spillover)",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_DLY"
+                            },
+                            {
+                                "name": "Slot REV (with spillover)",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_REV"
+                            },
+                            {
+                                "name": "Slot DLY (no spillover)",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_DLY_NO_SPILL"
+                            },
+                            {
+                                "name": "Slot REV (no spillover)",
+                                "value": "KemperEffectSlot.EFFECT_SLOT_ID_REV_NO_SPILL"
+                            }
+                        ]
+                    },
+
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "comment": "Mode of operation",
+                        "advanced": 1,
+                        "values": [
+                            {
+                                "name": "Latch",
+                                "value": "PushButtonAction.LATCH"
+                            },
+                            {
+                                "name": "Latch (momentary on long press)",
+                                "value": "PushButtonAction.HOLD_MOMENTARY"
+                            },
+                            {
+                                "name": "Momentary",
+                                "value": "PushButtonAction.MOMENTARY"
+                            },
+                            {
+                                "name": "Momentary (inverse)",
+                                "value": "PushButtonAction.MOMENTARY_INVERSE"
+                            },
+                            {
+                                "name": "Enable only",
+                                "value": "PushButtonAction.ENABLE"
+                            },
+                            {
+                                "name": "Disable only",
+                                "value": "PushButtonAction.DISABLE"
+                            },
+                            {
+                                "name": "One Shot",
+                                "value": "PushButtonAction.ONE_SHOT"
+                            },
+                            {
+                                "name": "No State Change",
+                                "value": "PushButtonAction.NO_STATE_CHANGE"
+                            }
+                        ]
+                    },
+
+                    {
+                        "name": "comparison_mode",
+                        "type": "select",
+                        "comment": "For incoming parameter values, this decides how the new values will be compared to the reference value (or on value) to update the state of the action",
+                        "advanced": 2,
+                        "values": [
+                            {
+                                "name": "Equal",
+                                "value": "BinaryParameterCallback.EQUAL"
+                            },
+                            {
+                                "name": "Greater than",
+                                "value": "BinaryParameterCallback.GREATER"
+                            },
+                            {
+                                "name": "Greater or equal",
+                                "value": "BinaryParameterCallback.GREATER_EQUAL"
+                            },
+                            {
+                                "name": "Less than",
+                                "value": "BinaryParameterCallback.LESS"
+                            },
+                            {
+                                "name": "Less or equal",
+                                "value": "BinaryParameterCallback.LESS_EQUAL"
+                            },
+                            {
+                                "name": "Do not change state",
+                                "value": "BinaryParameterCallback.NO_STATE_CHANGE"
+                            }
+                        ]
+                    },
+
+                    {
+                        "name": "max_value",
+                        "type": "any",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "step_width",
+                        "type": "any",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "preview_display",
+                        "type": "select"
+                    },
+                    {
+                        "name": "change_display",
+                        "type": "select"
+                    },
+                    {
+                        "name": "preview_timeout_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 5000
+                        }
+                    },
+                    {
+                        "name": "change_timeout_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 5000
+                        }
+                    },
+                    {
+                        "name": "preview_blink_period_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 1000
+                        }
+                    },
+                    {
+                        "name": "preview_reset_mapping",
+                        "type": "select",
+                        "advanced": 1,
+                        "default": "KemperMappings.RIG_ID()"
+                    },
+                    {
+                        "name": "preview_blink_color",
+                        "type": "color",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "convert_value",
+                        "type": "any",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "accept_action",
+                        "type": "select"
+                    },
+                    {
+                        "name": "cancel_action",
+                        "type": "select"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "KemperRigNameCallback",
+                "target": "DisplayLabel",
+                "parameters": [
+                    {
+                        "name": "show_rig_id",
+                        "type": "select",
+                        "values": [
+                            {
+                                "name": "Do not show",
+                                "value": "False"
+                            },
+                            {
+                                "name": "Show both (1-1)",
+                                "value": "True"
+                            },
+                            {
+                                "name": "Rig Number Only",
+                                "value": "'rig'"
+                            },
+                            {
+                                "name": "Bank Number Only",
+                                "value": "'bank'"
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "entityName": "BANK_SELECT",
+                "category": "bank",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "BANK_UP",
+                "category": "bank",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "BANK_DOWN",
+                "category": "bank",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "EFFECT_STATE",
+                "category": "effects",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "EFFECT_STATE_EXT",
+                "category": "effects",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "EFFECT_BUTTON",
+                "category": "effects",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "num",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": 4
+                        }
+                    }
+                ]
+            },
+            {
+                "entityName": "LOOPER_REC_PLAY_OVERDUB",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_STOP",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_ERASE",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_CANCEL",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_REVERSE",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_TRIGGER",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "LOOPER_HALF_SPEED",
+                "category": "looper",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "MORPH_BUTTON",
+                "category": "morph",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "morph_color_base",
+                        "type": "color",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "morph_color_morphed",
+                        "type": "color",
+                        "advanced": 1
+                    }
+                ]
+            },
+            {
+                "entityName": "MORPH_DISPLAY",
+                "category": "morph",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "morph_color_base",
+                        "type": "color",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "morph_color_morphed",
+                        "type": "color",
+                        "advanced": 1
+                    }
+                ]
+            },
+            {
+                "entityName": "RIG_SELECT_AND_MORPH_STATE",
+                "category": "rig",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "bank",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_BANKS",
+                            "additionalValues": [
+                                {
+                                    "name": "None",
+                                    "value": "None"
+                                }
+                            ]
+                        }
+                    },                    
+                    {
+                        "name": "morph_display",
+                        "type": "select",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "morph_use_leds",
+                        "type": "bool",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "morph_id",
+                        "type": "any",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "morph_only_when_enabled",
+                        "type": "bool",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "morph_color_base",
+                        "type": "color",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "morph_color_morphed",
+                        "type": "color",
+                        "advanced": 1
+                    }
+                ]
+            },
+            {
+                "entityName": "RIG_SELECT",
+                "category": "rig",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "bank",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": "NUM_BANKS",
+                            "additionalValues": [
+                                {
+                                    "name": "None",
+                                    "value": "None"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "auto_exclude_rigs",
+                        "type": "any",
+                        "advanced": 2
+                    }
+                ]
+            },
+            {
+                "entityName": "RIG_UP",
+                "category": "rig",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "RIG_DOWN",
+                "category": "rig",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "RIG_VOLUME_BOOST",
+                "category": "rig",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "boost_volume",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        }
+                    }
+                ]
+            },
+            {
+                "entityName": "TAP_TEMPO",
+                "category": "tempo",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            {
+                "entityName": "SHOW_TEMPO",
+                "category": "tempo",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "led_brightness_on",
+                        "type": "float",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "led_brightness_off",
+                        "type": "float",
+                        "advanced": 1
+                    }
+                ]
+            },
+            {
+                "entityName": "TUNER_MODE",
+                "category": "tuner",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+
+            {
+                "entityName": "FIXED_EFFECT_STATE",
+                "category": "effects",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "slot",
+                        "type": "select",
+                        "values": [
+                            {
+                                "name": "Transpose",
+                                "value": "FIXED_SLOT_ID_TRANSPOSE"
+                            },
+                            {
+                                "name": "Noise Gate",
+                                "value": "FIXED_SLOT_ID_GATE"
+                            },
+                            {
+                                "name": "Compressor",
+                                "value": "FIXED_SLOT_ID_COMP"
+                            },
+                            {
+                                "name": "Pure Booster",
+                                "value": "FIXED_SLOT_ID_BOOST"
+                            },
+                            {
+                                "name": "Wah Wah",
+                                "value": "FIXED_SLOT_ID_WAH"
+                            },
+                            {
+                                "name": "Vintage Chorus",
+                                "value": "FIXED_SLOT_ID_CHORUS"
+                            },
+                            {
+                                "name": "Air Chorus (post)",
+                                "value": "FIXED_SLOT_ID_AIR"
+                            },
+                            {
+                                "name": "Double Tracker (post)",
+                                "value": "FIXED_SLOT_ID_DBL_TRACKER"
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "entityName": "ENCODER_BPM",
+                "category": "other",
+                "target": "AdafruitEncoder",
+                "parameters": []
+            },
+
+            {
+                "entityName": "ENCODER_BANK_SELECT",
+                "category": "other",
+                "target": "AdafruitEncoder",
+                "parameters": []
+            },
+
+            {
+                "entityName": "ENCODER_RIG_TRANSPOSE",
+                "category": "other",
+                "target": "AdafruitEncoder",
+                "parameters": []
+            },
+
+            {
+                "entityName": "AMP_GAIN",
+                "category": "amp",
+                "target": "AdafruitEncoder",
+                "parameters": []
+            },
+
+            {
+                "entityName": "MAPPING_EFFECT_BUTTON",
+                "parameters": [
+                    {
+                        "name": "num",
+                        "type": "int",
+                        "range": {
+                            "min": 1,
+                            "max": 4
+                        }
+                    }
+                ]
+            },
+
+            {
+                "entityName": "TunerDisplayCallback",
+                "splashRootParameter": "splash_default",
+                "parameters": [
+                    {
+                        "name": "splash_default",
+                        "hidden": true
+                    },
+                    {
+                        "name": "splash_tuner",
+                        "hidden": true
+                    },
+                    {
+                        "name": "color_in_tune",
+                        "type": "color"
+                    },
+                    {
+                        "name": "color_out_of_tune",
+                        "type": "color"
+                    },
+                    {
+                        "name": "color_neutral",
+                        "type": "color"
+                    },
+                    {
+                        "name": "strobe_color",
+                        "type": "color"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        "client": "local",
+        "entities": [
+            {
+                "entityName": "default",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "advanced": 1,
+                        "type": "any",
+                        "comment": "This ID can be used for Paging or custom callbacks, to enable/disable the action."
+                    },
+                    {
+                        "name": "use_leds",
+                        "type": "bool",
+                        "comment": "If disabled, the action will not use the LEDs of the switch"
+                    },
+                    {
+                        "name": "display",
+                        "type": "select",
+                        "comment": "DisplayLabel identifier (must be defined in display.py)"
+                    },
+                    {
+                        "name": "color",
+                        "type": "color"
+                    },
+
+                    {
+                        "name": "enable_callback",
+                        "advanced": 2,
+                        "type": "any",
+                        "comment": "Callback instance to control dynamically whether the action should be enabled."
+                    },
+
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "advanced": 1,
+                        "unconvertedValues": [
+                            "None"
+                        ],
+                        "comment": "Fixed text (overrides the action specific text if the action would generate one)"
+                    },
+
+                    {
+                        "name": "max_value",
+                        "type": "any",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "step_width",
+                        "type": "any",
+                        "advanced": 1
+                        
+                    },
+                    {
+                        "name": "preview_display",
+                        "type": "select"
+                    },
+                    {
+                        "name": "change_display",
+                        "type": "select"
+                    },
+                    {
+                        "name": "preview_timeout_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 5000
+                        }
+                    },
+                    {
+                        "name": "change_timeout_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 5000
+                        }
+                    },
+                    {
+                        "name": "preview_blink_period_millis",
+                        "type": "int",
+                        "advanced": 1,
+                        "range": {
+                            "min": 1,
+                            "max": 1000
+                        }
+                    },
+                    {
+                        "name": "preview_reset_mapping",
+                        "type": "select",
+                        "advanced": 1,
+                        "default": "KemperMappings.RIG_ID()"
+                    },
+                    {
+                        "name": "preview_blink_color",
+                        "type": "color",
+                        "advanced": 1
+                    },
+                    {
+                        "name": "convert_value",
+                        "type": "any",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "accept_action",
+                        "type": "select"
+                    },
+                    {
+                        "name": "cancel_action",
+                        "type": "select"
+                    },
+                    {
+                        "name": "use_internal_state",
+                        "type": "bool",
+                        "advanced": 2
+                    }
+                ]
+            },
+
+            {
+                "entityName": "AnalogAction",
+                "category": "other",
+                "target": "AdafruitPotentiometer",
+                "parameters": [
+                    {
+                        "name": "mapping",
+                        "type": "select",
+                        "default": "MAPPING_VOLUME_PEDAL()",
+                        "comment": "Mapping to be used."
+                    },
+                    {
+                        "name": "max_frame_rate",
+                        "advanced": 2,
+                        "type": "any"
+                    },
+                    {
+                        "name": "num_steps",
+                        "advanced": 1,
+                        "type": "any"
+                    },
+                    {
+                        "name": "cal_min_window",
+                        "advanced": 2,
+                        "type": "any"
+                    },
+                    {
+                        "name": "transfer_function",
+                        "advanced": 2,
+                        "type": "any"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "EncoderAction",
+                "category": "other",
+                "target": "AdafruitEncoder",
+                "parameters": [
+                    {
+                        "name": "mapping",
+                        "type": "select",
+                        "default": "MAPPING_AMP_GAIN()",
+                        "comment": "Mapping to be used."
+                    }
+                ]
+            },
+
+            {
+                "entityName": "PagerAction",
+                "category": "pager",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "pages",
+                        "type": "pages",
+                        "hideComment": true,
+                        "default": "[]"
+                    },
+                    {
+                        "name": "select_page",
+                        "type": "select-page"
+                    },
+                    {
+                        "name": "mappings",
+                        "type": "any",
+                        "default": "[]",
+                        "advanced": 2
+                    },
+                    {
+                        "name": "led_brightness",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "advanced": 1
+                    },
+                    {
+                        "name": "led_brightness_off",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "advanced": 1
+                    },
+                    {
+                        "name": "led_brightness_on",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "advanced": 1
+                    },
+                    {
+                        "name": "display_dim_factor_on",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "advanced": 1
+                    },
+                    {
+                        "name": "display_dim_factor_off",
+                        "type": "float",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "advanced": 1
+                    }
+                ]
+            },
+
+            {
+                "entityName": "PagerAction.proxy",
+                "category": "pager",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "page_id",
+                        "type": "select-page"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "BINARY_SWITCH",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "mapping",
+                        "type": "select",
+                        "default": "MAPPING_ROTARY_SPEED(KemperEffectSlot.EFFECT_SLOT_ID_MOD)",
+                        "comment": "Mapping to be used."
+                    }
+                ]
+            },
+
+            {
+                "entityName": "HID_KEYBOARD",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "keycodes",
+                        "type": "select-free",
+                        "default": "Keycode.LEFT_ARROW"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "ENCODER_BUTTON",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+
+            {
+                "entityName": "PARAMETER_UP_DOWN",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "mapping",
+                        "type": "select",
+                        "default": "MAPPING_DLY_REV_MIX(KemperEffectSlot.EFFECT_SLOT_ID_REV)",
+                        "comment": "Mapping to be used."
+                    },
+                    {
+                        "name": "offset",
+                        "type": "int",
+                        "default": "512"
+                    },
+                    {
+                        "name": "change_timeout_millis",
+                        "type": "any"
+                    },
+                    {
+                        "name": "text",
+                        "type": "text"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "CUSTOM_MESSAGE",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "any",
+                        "default": "[176, 33, 1]"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "ROTATING_MESSAGES",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": []
+            },
+            
+            {
+                "entityName": "DISPLAY_FIXED_TEXT",
+                "category": "other",
+                "target": "AdafruitSwitch",
+                "parameters": [
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "default": "''"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "SplashesCallback",
+                "splashRootParameter": "splashes",
+                "parameters": [
+                    {
+                        "name": "splashes",
+                        "hidden": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "client": "boomerang",
+        "entities": [
+            {
+                "entityName": "default",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "advanced": 1,
+                        "type": "any",
+                        "comment": "This ID can be used for Paging or custom callbacks, to enable/disable the action."
+                    },
+                    {
+                        "name": "use_leds",
+                        "type": "bool",
+                        "comment": "If disabled, the action will not use the LEDs of the switch"
+                    },
+                    {
+                        "name": "display",
+                        "type": "select",
+                        "comment": "Display label to visualize the action state (must be defined in display.py)"
+                    },
+                    {
+                        "name": "color",
+                        "type": "color",
+                        "advanced": 1
+                    },
+
+                    {
+                        "name": "enable_callback",
+                        "advanced": 2,
+                        "type": "any",
+                        "comment": "Callback instance to control dynamically whether the action should be enabled."
+                    },
+
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "advanced": 1,
+                        "unconvertedValues": [
+                            "None"
+                        ],
+                        "comment": "Fixed text (overrides the action specific text if the action would generate one)"
+                    },
+                    {
+                        "name": "num_leds",
+                        "comment": "Number of LEDs to occupy. Must be in range [1..n]. The color is rotated on the LEDs if greater than 1.",
+                        "type": "int"
+                    }
+                ]
+            },
+
+            {
+                "entityName": "BOOMERANG_PLAY_STOP_ALL",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_SYNC_SERIAL",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_MUTE_THRU",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_PANIC",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_ERASE",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_ERASE_ALL",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_STACK",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_COPY",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_FADE",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_OCTAVE",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_ONCE",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            },
+            {
+                "entityName": "BOOMERANG_REVERSE",
+                "target": "AdafruitSwitch",
+                "category": "boomerang-generic",
+                "parameters": []
+            }
+        ]
+    }
+]

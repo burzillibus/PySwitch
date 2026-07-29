@@ -1,0 +1,131 @@
+.container .display-editor {
+    /* background-color: yellow; */
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    overflow: hidden;
+}
+
+.container .display-editor .display-preview-container {
+    /* background-color: green; */
+}
+
+.container .display-editor .display-parameters-container {
+    /* background-color: lightgoldenrodyellow; */
+    display: inline-block;
+    width: 100%;
+    container-type: size;
+    padding-left: 1em;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@container popup-content (max-width: 650px) {
+    .container .display-editor {
+        grid-template-columns: auto;
+        grid-template-rows: 50% 50%;
+    }
+
+    .container .display-editor .display-preview-container {
+        text-align: center;
+    }
+
+    .container .display-editor .display-parameters-container {
+        overflow: auto;
+        margin-top: 1em;
+    }
+} 
+
+/**********************************************************************************/
+
+.container .display-editor .display-preview {
+    background-color: rgb(0, 0, 0);
+
+    display: inline-block;
+    position: relative;
+}
+
+.container .display-editor .display-preview .display-element {
+    position: absolute;
+    padding: 0.4em;
+    overflow: hidden;
+}
+
+/*.container .display-editor .display-preview .display-element:hover {
+    background-color: rgba(88, 88, 88, 1);
+}*/
+
+.container .display-editor .display-preview .display-label {
+    background-color: rgb(216, 216, 216);
+    opacity: 0.92;
+    border: 1px solid rgb(110, 110, 110);
+}
+
+.container .display-editor .display-preview .display-tuner {
+    background-color: rgb(196, 215, 194);
+    opacity: 0.92;
+    border: 1px solid rgb(110, 110, 110);
+}
+
+.container .display-editor .display-preview .display-dot {
+    background-color: rgb(128, 213, 121);
+    opacity: 0.92;
+    border: 1px solid rgb(110, 110, 110);
+    border-radius: 100%;
+}
+
+.container .display-editor .display-preview .selected {
+    background-color: rgb(165, 165, 165);
+    opacity: 0.98;
+    border: 1px solid rgb(65, 65, 65);
+}
+
+.container .display-editor .display-preview .display-element.warning {
+    background-color: #eea236;
+}
+
+.container .display-editor .display-preview .display-element.error {
+    background-color: #d43f3a;
+}
+
+/************************************************************************************/
+
+.container .display-editor .display-parameters {
+    width: 100%;
+    /* background-color: rgb(226, 226, 226); */
+}
+
+.container .display-editor .display-parameters .parameter-list {
+    border-top: 1px solid black;
+}    
+
+.container .display-editor .display-parameters-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding-bottom: 0.6em;
+}
+
+/************************************************************************************/
+
+.container .display-editor .display-parameters-container .display-selector {
+}
+
+.container .display-editor .display-parameters-container .button { 
+    margin-left: 0.6em;
+    font-size: 0.6em;
+}
+
+.container .display-editor .display-parameters-container .parameter-link {
+    text-decoration: underline;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.container .display-editor .display-parameters-container .parameter-link:hover {
+    opacity: 0.9;
+}

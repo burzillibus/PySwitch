@@ -1,0 +1,100 @@
+.container .application #pyswitch-inputs .pyswitch-parser-frontend {
+    position: absolute;
+}
+
+/****************************************************************/
+
+.container .application .pyswitch-parser-frontend .action-grid {
+    position: relative;
+    background-color: #afafaf;
+    border-radius: 0.5em;
+    transition: width 0.2s, height 0.2s;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item {
+    display: block;
+    position: absolute;
+    z-index: 1;   
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item.muuri-item-dragging {
+    z-index: 3;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item.muuri-item-releasing {
+    z-index: 2;
+}
+  
+.container .application .pyswitch-parser-frontend .action-grid .action-item.muuri-item-hidden {
+    z-index: 0;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content {
+    position: relative;
+    margin: 0.3em 0.3em;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content.action-button > *:first-child {
+    border-radius: 0.3em 0 0 0.3em;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content.action-button > *:last-child {
+    border-radius: 0 0.3em 0.3em 0;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content.input-button > * {
+    margin-right: 0.6em;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content.input-button > *:last-child {
+    background-color: unset;
+    margin-right: 0;
+}
+
+.container .application .pyswitch-parser-frontend .action-grid .action-item-content.input-button > *:last-child:hover {
+    background-color: #b5b5b5;
+}
+
+/****************************************************************/
+
+.container .application .pyswitch-parser-frontend .button {
+    font-size: 0.7em;
+    text-overflow: ellipsis;
+    border: none;
+    display: flex;
+}
+
+/****************************************************************/
+
+.container .application .pyswitch-parser-frontend .button.add-action {
+    background-color: unset;
+}
+
+/*****************************************************************/
+
+.container .application .pyswitch-parser-frontend .button.actions {
+    background-color: rgb(221, 221, 221);
+    color: black;
+}
+
+.container .application .pyswitch-parser-frontend .button.actions-hold {
+    background-color: rgb(92, 92, 92);
+    color: white;
+}
+
+.container .application .pyswitch-parser-frontend .button:hover {
+    filter: brightness(0.9);
+}
+
+/*****************************************************************/
+
+.container .application .pyswitch-parser-frontend .button.warn {
+    background-color: #ffaf10;
+}
+
+.container .application .pyswitch-parser-frontend .button.error {
+    background-color: #ff1010;
+}

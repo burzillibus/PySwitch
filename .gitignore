@@ -1,0 +1,9 @@
+**/.DS_Store
+
+**/__pycache__
+
+screenlog*
+
+**/memray*
+
+web/apache2-log

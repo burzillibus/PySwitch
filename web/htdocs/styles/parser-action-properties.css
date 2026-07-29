@@ -1,0 +1,135 @@
+.container .action-properties {
+    width: 100%;
+    position: relative;
+    container-type: size;
+}
+
+@container popup-content (max-width: 650px) {
+    .container .action-properties {
+        min-height: 100cqh;
+    }
+}
+
+.container .action-properties > * {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+/**********************************************************************************/
+
+.container .action-properties .action-header {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.container .action-properties .action-header:first-child {
+    font-weight: bolder;
+}
+
+.container .action-properties .action-comment {
+    white-space: pre-wrap;
+    margin-left: 0.5em;
+    padding-right: 1em;
+}
+
+.container .action-properties .action-comment ul {
+    white-space: normal;
+}
+
+.container .action-properties .action-parameters {
+    border-spacing: 0;
+    margin-left: 0.5em;
+}
+
+/* .container .action-properties .action-buttons {
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    width: unset;
+} */
+
+/**********************************************************************************/
+
+.container .action-properties .action-parameters table {
+    border-spacing: 0;
+    width: 100cqw;
+}
+
+/* .container .action-properties .action-parameters td:first-child {
+    width: fit-content;
+} */
+
+/* .container .action-properties .action-parameters td:last-child {
+    white-space: unset;
+    color: gray;
+} */
+
+.container .action-properties .action-parameters td {
+    border-bottom: 1px solid lightgray;
+    padding: 0.5em;
+    vertical-align: top;
+    position: relative;
+    z-index: 10;
+}
+
+.container .action-properties .action-parameters td > * {
+    position: relative;
+    z-index: 10;
+}
+
+.container .action-properties .action-parameters td:first-child {
+    padding-left: 0;
+}
+
+
+.container .action-properties .action-parameters tr:last-child td {
+    border-bottom: none;
+}
+
+/**********************************************************************************/
+
+.container .action-properties .action-parameters .param-messages td {
+    color: orange;
+    white-space: normal;
+}
+
+.container .action-properties td.has-messages > * {
+    background-color: orange;
+}
+
+/**********************************************************************************/
+
+.container .action-properties select {
+    font-size: 0.88888em;
+    /* max-width: 8em; */
+}
+
+.container .action-properties input[type=text] {
+    width: 15em;
+}
+
+.container .action-properties input[type=checkbox] {
+    text-align: left;
+}
+
+/**********************************************************************************/
+
+.container .action-properties .show-advanced {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #959595;
+}
+
+
+.container .action-properties .parameter-option {
+    cursor: pointer;
+    margin-left: 0.6em;
+}
+
+.container .action-properties .parameter-option.parameter-link {
+    text-decoration: underline;
+}
+
+.container .action-properties select.parameter-option {
+    max-width: 8em;
+}
