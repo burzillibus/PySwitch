@@ -74,14 +74,14 @@ Inputs = [
     {
         "assignment": PA_MIDICAPTAIN_MINI_SWITCH_B,
         "actions": [
-            _stomp(67, "FX 4", Colors.ORANGE, DISPLAY_FOOTER_2),
+            _stomp(66, "FX 3", Colors.BLUE, DISPLAY_FOOTER_1),
             NAVI_PATCH_DOWN(display = DISPLAY_FOOTER_1, id = _NAVI, enable_callback = _MODE),
         ],
     },
     {
         "assignment": PA_MIDICAPTAIN_MINI_SWITCH_C,
         "actions": [
-            _stomp(68, "FX 5", Colors.CYAN),
+            _stomp(67, "FX 4", Colors.ORANGE, DISPLAY_FOOTER_2),
             NAVI_PATCH_UP(display = DISPLAY_FOOTER_2, id = _NAVI, enable_callback = _MODE),
         ],
     },

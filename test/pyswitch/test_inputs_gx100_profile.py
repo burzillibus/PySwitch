@@ -100,8 +100,8 @@ class TestGx100InputsProfile(unittest.TestCase):
         expected_stomps = [
             (self.profile.Inputs[1], 64, _Colors.RED),
             (self.profile.Inputs[2], 65, _Colors.GREEN),
-            (self.profile.Inputs[4], 67, _Colors.ORANGE),
-            (self.profile.Inputs[5], 68, _Colors.CYAN),
+            (self.profile.Inputs[4], 66, _Colors.BLUE),
+            (self.profile.Inputs[5], 67, _Colors.ORANGE),
         ]
         for input_definition, control, color in expected_stomps:
             stomp = input_definition["actions"][0]
@@ -111,6 +111,9 @@ class TestGx100InputsProfile(unittest.TestCase):
             self.assertEqual(stomp["led_brightness_on"], 0.30)
             self.assertEqual(stomp["led_brightness_off"], 0.0)
             self.assertEqual(stomp["id"], "stomp")
+
+        self.assertEqual(self.profile.Inputs[4]["actions"][0]["text"], "FX 3")
+        self.assertEqual(self.profile.Inputs[5]["actions"][0]["text"], "FX 4")
 
     def test_key_1_enters_navi_and_key_4_returns_to_stomp(self):
         key_1 = self.profile.Inputs[0]

@@ -22,8 +22,8 @@ Il testo `STOMP` e' rosso.
 | 2 | FX 1: CC 64, alterna 127/0. |
 | 3 | FX 2: CC 65, alterna 127/0. |
 | 4 | Resta in STOMP; LED bianco fisso. Non invia messaggi MIDI. |
-| 5 | FX 4: CC 67, alterna 127/0. |
-| 6 | FX 5: CC 68, alterna 127/0. |
+| 5 | FX 3: CC 66, alterna 127/0. |
+| 6 | FX 4: CC 67, alterna 127/0. |
 
 Configurare nella GX-100 gli ASSIGN che ricevono questi CC e, se si desidera
 il feedback LED, fare ritrasmettere alla GX-100 lo stesso CC quando cambia lo
