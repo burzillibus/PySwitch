@@ -16,6 +16,8 @@ _GX100_MODEL_ID = [0x00, 0x00, 0x00, 0x00, 0x0B]
 _GX100_RQ1 = 0x11
 _GX100_DT1 = 0x12
 _CURRENT_MEMORY_ADDRESS = [0x00, 0x00, 0x00, 0x00]
+_TEMPORARY_MEMORY_ADDRESS = [0x10, 0x00, 0x00, 0x00]
+_MAX_FX_ITEMS = 20
 
 
 def MAPPING_RX_MEMORY_CHANGE():
@@ -46,6 +48,26 @@ def MAPPING_RX_CURRENT_MEMORY():
     return mapping
 
 
+def MAPPING_RX_FX_ITEM_STATE(fx_item):
+    """Read the ON/OFF state of an FX Item in the current GX-100 memory."""
+    if fx_item < 1 or fx_item > _MAX_FX_ITEMS:
+        raise ValueError("GX-100 FX Item must be in range 1.." + str(_MAX_FX_ITEMS))
+
+    name = "BOSS GX-100 FX Item " + str(fx_item) + " state"
+    for mapping in ClientParameterMapping._mappings:
+        if mapping.name == name:
+            return mapping
+
+    # MemoryFxItem 1 starts at 10 00 11 00. Each following item is 0x0200
+    # bytes later; offset 01 is its documented OFF/ON parameter.
+    address = list(_TEMPORARY_MEMORY_ADDRESS)
+    address[2] = 0x11 + ((fx_item - 1) * 2)
+    address[3] = 0x01
+    mapping = _FxItemStateMapping(name, address)
+    ClientParameterMapping._mappings.append(mapping)
+    return mapping
+
+
 class _CurrentMemoryMapping(ClientParameterMapping):
     def __init__(self, name):
         # RQ1: address 00 00 00 00, size 00 00 00 04. The checksum is 7C.
@@ -70,6 +92,25 @@ class _CurrentMemoryMapping(ClientParameterMapping):
 
         # The GX-100 stores the current memory number as four 4-bit digits.
         self.value = (digits[0] << 12) + (digits[1] << 8) + (digits[2] << 4) + digits[3]
+        return True
+
+
+class _FxItemStateMapping(ClientParameterMapping):
+    def __init__(self, name, address):
+        self._address = address
+        super().__init__(
+            name = name,
+            create_key = ClientParameterMapping,
+            request = _roland_rq1(address, [0x00, 0x00, 0x00, 0x01]),
+            response = _roland_dt1_template(address),
+        )
+
+    def parse(self, midi_message):
+        data = _roland_dt1_data(midi_message, self._address)
+        if not data or data[0] > 1:
+            return False
+
+        self.value = data[0]
         return True
 
 

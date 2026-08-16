@@ -39,6 +39,7 @@ def _load_profile():
     actions.NAVI_PATCH_DOWN = lambda **kwargs: {"patch_down": kwargs}
     actions.NAVI_PATCH_UP = lambda **kwargs: {"patch_up": kwargs}
     actions.SYNC_GX100_MEMORY = lambda **kwargs: {"sync_memory": kwargs}
+    actions.SYNC_GX100_STOMPS = lambda controls: {"sync_stomps": controls}
 
     binary = ModuleType("pyswitch.clients.local.actions.binary_switch")
     binary.BINARY_SWITCH = lambda **kwargs: kwargs
@@ -123,6 +124,9 @@ class TestGx100InputsProfile(unittest.TestCase):
         self.assertEqual(key_1["assignment"], self.keys[0])
         self.assertEqual(key_1["actions"][0]["target"], "navi")
         self.assertEqual(key_1["actions"][1]["sync_memory"]["display"], "DISPLAY_RIG_NAME")
+        self.assertEqual(len(key_1["actions"]), 3)
+        for action in key_1["actions"]:
+            self.assertNotIn("sync_stomps", action)
         self.assertEqual(key_4["assignment"], self.keys[5])
         self.assertEqual(key_4["actions"][0]["mode_indicator"]["color"], _Colors.WHITE)
         self.assertEqual(key_4["actions"][0]["mode_indicator"]["id"], "stomp")

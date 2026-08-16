@@ -4,7 +4,8 @@ from ....controller.actions import Action
 from ....controller.callbacks import Callback
 from ....colors import Colors
 from .mappings import (
-    MAPPING_RX_CURRENT_MEMORY, MAPPING_RX_MEMORY_CHANGE, MAPPING_TX_MEMORY_CHANGE,
+    MAPPING_RX_CURRENT_MEMORY, MAPPING_RX_FX_ITEM_STATE, MAPPING_RX_MEMORY_CHANGE,
+    MAPPING_STOMP_CONTROL_CHANGE, MAPPING_TX_MEMORY_CHANGE,
 )
 
 
@@ -92,6 +93,62 @@ class _SyncMemoryCallback(Callback):
         else:
             self.action.label.text = "GX MEM " + str(memory + 1)
         self.action.label.text_color = self._color
+
+
+def SYNC_GX100_STOMPS(controls):
+    """Synchronize Stomp CC controls with FX Items 1..n after a memory change.
+
+    Each CC must be assigned on the GX-100 to the ON/OFF parameter of the
+    matching FX Item. For example, CC64 controls FX Item 1 and CC65 controls
+    FX Item 2.
+    """
+    return Action({
+        "callback": _SyncStompStatesCallback(controls),
+        "useSwitchLeds": False,
+    })
+
+
+class _SyncStompStatesCallback(Callback):
+    def __init__(self, controls):
+        self._memory_change = MAPPING_RX_MEMORY_CHANGE()
+        self._states = []
+        self._stomps = []
+
+        for index in range(len(controls)):
+            self._states.append(MAPPING_RX_FX_ITEM_STATE(index + 1))
+            self._stomps.append(MAPPING_STOMP_CONTROL_CHANGE(controls[index]))
+
+        super().__init__(mappings = [self._memory_change] + self._states)
+
+    def init(self, appl, listener = None):
+        super().init(appl, listener)
+        self._appl = appl
+
+    def update(self):
+        # States are queried only after a Program Change, not on every UI tick.
+        pass
+
+    def push(self):
+        pass
+
+    def release(self):
+        pass
+
+    def parameter_changed(self, mapping):
+        if mapping == self._memory_change:
+            for state in self._states:
+                self._appl.client.request(state, self)
+            return
+
+        for index in range(len(self._states)):
+            if mapping != self._states[index]:
+                continue
+
+            # Feed the queried FX-item state to the existing CC-based Stomp
+            # action. No CC is sent back to the GX-100.
+            value = 127 if mapping.value else 0
+            self._appl.client.publish_value(self._stomps[index], value)
+            return
 
 
 def NAVI_BANK_DOWN(display = None, id = None, enable_callback = None):

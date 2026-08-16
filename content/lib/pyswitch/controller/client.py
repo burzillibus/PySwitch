@@ -309,6 +309,16 @@ class Client: #(ClientRequestListener):
                 
             self.midi.send(mapping.set)
 
+    # Publish feedback obtained through a different device protocol mapping.
+    # This keeps UI actions subscribed to ``mapping`` in sync without sending
+    # an additional MIDI message back to the device.
+    def publish_value(self, mapping, value):
+        mapping.value = value
+
+        request = self.get_matching_request(mapping)
+        if request and not request.finished:
+            request.notify_listeners()
+
     # Send the request message of a mapping. Calls the passed listener when the answer has arrived.
     #@RuntimeStatistics.measure
     def request(self, mapping, listener = None):
@@ -632,4 +642,3 @@ class BidirectionalClient(Client, Updateable):
 #    # Must return a color representation for the current state
 #    def get_color(self):
 #        return (0, 0, 0)
-
